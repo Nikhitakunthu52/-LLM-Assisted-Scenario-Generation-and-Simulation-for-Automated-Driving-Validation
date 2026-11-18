@@ -1,0 +1,29 @@
+{
+  "scenario_type": "rear_end",
+  "environment": {
+    "light": "day",
+    "weather": "clear",
+    "surface": "dry"
+  },
+  "ego": {
+    "vehicle": "car",
+    "speed_kph": 40.0,
+    "reacts": false,
+    "reaction_time_s": 0,
+    "brake_decel_mps2": 0
+  },
+  "other": {
+    "vehicle": "car",
+    "maneuver": "stopped",
+    "speed_kph": 0.0,
+    "final_speed_kph": 0.0,
+    "decel_mps2": 3.0,
+    "gap_m": null
+  },
+  "collision_reported": true,
+  "assumptions": [
+    "rules baseline: generic defaults for vehicles, reaction, deceleration"
+  ],
+  "missing_info": [],
+  "confidence": "low"
+}

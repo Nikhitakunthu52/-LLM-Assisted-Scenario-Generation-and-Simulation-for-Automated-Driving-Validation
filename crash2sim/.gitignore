@@ -1,0 +1,14 @@
+# secrets
+.env
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+# local tools
+tools/
+esmini/
+# large / regenerable simulator recordings
+outputs/**/sim.dat
+outputs/**/esmini_log.txt
+*_render.xosc

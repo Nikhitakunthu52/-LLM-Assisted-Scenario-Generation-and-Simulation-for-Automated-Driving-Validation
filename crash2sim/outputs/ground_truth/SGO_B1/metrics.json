@@ -1,0 +1,11 @@
+{
+  "sim_collision": true,
+  "collision_time_s": 5.2,
+  "min_center_distance_m": 0.03,
+  "ego_brake_start_s": 5.25,
+  "duration_s": 7.85,
+  "impact_speed_ego_kph": 40.0,
+  "impact_speed_other_kph": 6.0,
+  "delta_v_kph": 34.0,
+  "reproduces_report": true
+}

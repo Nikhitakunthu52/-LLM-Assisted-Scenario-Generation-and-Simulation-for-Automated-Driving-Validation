@@ -1,0 +1,22 @@
+{
+  "report_id": "CISS_A1",
+  "source_type": "CISS-style investigation (in-depth)",
+  "synthetic": true,
+  "note": "ILLUSTRATIVE placeholder written in the structure of an NHTSA CISS case (narrative + coded variables). Replace with a real case from https://crashviewer.nhtsa.dot.gov before citing results.",
+  "narrative": "This two-vehicle crash occurred on a straight, level, four-lane urban arterial during daylight hours. The weather was clear and the asphalt road surface was dry. The posted speed limit was 72 km/h (45 mph). Vehicle 1 (V1), a 2019 mid-size SUV, was traveling eastbound in lane two. Vehicle 2 (V2), a 2016 compact sedan, was traveling ahead of V1 in the same lane. Traffic ahead slowed for a queue and the driver of V2 braked moderately, slowing from approximately 65 km/h to a near stop. The driver of V1 reported looking at the vehicle's navigation screen and did not notice V2 slowing. V1's event data recorder showed a pre-crash speed of 68 km/h five seconds before the event, with service brake application recorded approximately 0.8 seconds before impact. The front plane of V1 struck the back plane of V2. Both vehicles came to rest in the eastbound lanes. V1 was towed due to damage.",
+  "coded_fields": {
+    "crash_type": "Rear-end, lead vehicle decelerating",
+    "light_condition": "Daylight",
+    "weather": "Clear",
+    "surface_condition": "Dry",
+    "roadway_alignment": "Straight",
+    "roadway_profile": "Level",
+    "speed_limit_kph": 72,
+    "V1_precrash_movement": "Going straight",
+    "V1_critical_event": "Other vehicle in lane - decelerating",
+    "V1_avoidance_maneuver": "Braking (late)",
+    "V1_edr_speed_kph_minus5s": 68,
+    "V2_precrash_movement": "Decelerating in traffic lane",
+    "V2_speed_estimate_kph": 65
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "report_id": "SGO_B2",
+  "source_type": "NHTSA Standing General Order (ADS) incident report - style",
+  "synthetic": true,
+  "note": "ILLUSTRATIVE placeholder written in the structure of an SGO 2021-01 CSV row. Replace with a real row from the SGO ADS CSV before citing results.",
+  "narrative": "[REDACTED, MAY CONTAIN CONFIDENTIAL BUSINESS INFORMATION]",
+  "coded_fields": {
+    "Crash With": "SUV",
+    "Roadway Type": "Intersection",
+    "Roadway Surface": "Dry",
+    "Lighting": "Dusk",
+    "Weather - Clear": "Y",
+    "Posted Speed Limit (MPH)": 35,
+    "SV Pre-Crash Movement": "Proceeding Straight",
+    "SV Precrash Speed (MPH)": 22,
+    "CP Pre-Crash Movement": "Making Left Turn",
+    "SV Contact Area - Front": "Y",
+    "CP Contact Area - Right": "Y",
+    "Narrative": "[fully redacted]"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "scenario_type": "ltap_od",
+  "environment": {
+    "light": "dusk",
+    "weather": "clear",
+    "surface": "dry"
+  },
+  "ego": {
+    "vehicle": "car",
+    "speed_kph": 35,
+    "reacts": true,
+    "reaction_time_s": 0.5,
+    "brake_decel_mps2": 7.0
+  },
+  "other": {
+    "vehicle": "suv",
+    "maneuver": "left_turn",
+    "speed_kph": 20,
+    "final_speed_kph": 15,
+    "decel_mps2": 0,
+    "gap_m": null
+  },
+  "collision_reported": true,
+  "assumptions": [
+    "ego = ADS subject vehicle going straight at 22 mph (35 km/h)",
+    "ADS reaction 0.5 s, braking 7 m/s^2",
+    "SUV turn speed 15-20 km/h (not reported)"
+  ],
+  "missing_info": [
+    "narrative fully redacted",
+    "crash partner speed",
+    "timing / distances"
+  ],
+  "confidence": "low"
+}

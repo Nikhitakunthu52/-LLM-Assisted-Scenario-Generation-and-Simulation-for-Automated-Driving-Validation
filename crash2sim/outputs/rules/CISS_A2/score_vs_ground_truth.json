@@ -1,0 +1,14 @@
+{
+  "scenario_type": true,
+  "light": true,
+  "weather": true,
+  "surface": true,
+  "ego_vehicle": true,
+  "ego_speed_kph": true,
+  "ego_reacts": true,
+  "other_vehicle": false,
+  "other_maneuver": true,
+  "other_speed_kph": true,
+  "collision_reported": true,
+  "accuracy": 0.91
+}
