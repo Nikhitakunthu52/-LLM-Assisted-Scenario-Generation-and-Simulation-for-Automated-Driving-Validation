@@ -19,10 +19,10 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-**esmini (simulator)**
-- Mac/Linux: `./scripts/setup_esmini.sh`
-- Windows: download `esmini-bin_Windows.zip` from https://github.com/esmini/esmini/releases and unzip it into `crash2sim/tools/`.
-- Optional, for real car models instead of boxes: download the esmini models pack (linked in esmini's README) and put the `models` folder in `crash2sim/sim_assets/`.
+**esmini (simulator; runs every scenario)**
+- Mac/Linux: `./scripts/setup_esmini.sh` downloads esmini's **demo package** (simulator + 3D cars and road scenes, ~150 MB).
+- Windows: download `esmini-demo_Windows.zip` from https://github.com/esmini/esmini/releases and unzip it into `crash2sim/tools/`.
+- The 3D models are found automatically in `<esmini>/resources/models`. Without them, videos show boxes, but the results are the same.
 
 **Ollama (LLM)**: install from https://ollama.com, then:
 ```bash
@@ -34,7 +34,7 @@ ollama pull llama3.1:8b          # ~5 GB; needs ~8 GB free RAM. Smaller: qwen2.5
 cp .env.example .env             # Windows: copy .env.example .env
 ```
 Set `ESMINI_BIN` to the folder that contains `esmini` / `esmini.exe`, for example
-`ESMINI_BIN=./tools/esmini/bin` or `ESMINI_BIN=C:\Users\you\capstone\crash2sim\tools\esmini\bin`.
+`ESMINI_BIN=./tools/esmini-demo/bin` or `ESMINI_BIN=C:\Users\you\capstone\crash2sim\tools\esmini-demo\bin`.
 
 ## 2. Smoke test (2 min)
 
@@ -43,7 +43,8 @@ pytest -q                                          # 4 passed
 python run_pipeline.py --backend ground_truth --video
 ```
 You should see 5 reports with `reproduces report: True/False` and new files in `outputs/ground_truth/`.
-Open one scenario in a window: `tools/esmini/bin/esmini --window 60 60 1024 576 --osc scenarios/generated/ground_truth/CISS_A2.xosc`
+Open one scenario in esmini's viewer (mouse to orbit; `k` changes the camera, Tab switches vehicles):
+`tools/esmini-demo/bin/esmini --window 60 60 1024 576 --path tools/esmini-demo/resources/models --osc scenarios/generated/ground_truth/CIREN_8392.xosc`
 
 ## 3. Replace the placeholder crash reports (Data team, Thu)
 
@@ -123,5 +124,6 @@ git push
 | `Connection refused localhost:11434` | Ollama isn't running: start the app or run `ollama serve` |
 | LLM is very slow | use `qwen2.5:3b`, or `--backend openai` with an API key |
 | `video: not rendered` | needs a display (normal laptop) and ffmpeg (`brew install ffmpeg` / `winget install ffmpeg`) |
-| Mac: "esmini can't be opened" | `xattr -dr com.apple.quarantine tools/esmini` |
+| Mac: "esmini can't be opened" | `xattr -dr com.apple.quarantine tools/esmini-demo` |
+| videos show boxes, not cars | models not found: set `ESMINI_MODELS=<esmini-demo>/resources/models` in `.env` |
 | `sim_failed` | open the `.xosc` in esmini with a window; `outputs/<backend>/<id>/esmini_log.txt` has the error |

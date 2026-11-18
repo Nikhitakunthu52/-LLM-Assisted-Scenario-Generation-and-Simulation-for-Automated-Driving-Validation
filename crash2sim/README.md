@@ -27,7 +27,7 @@ flowchart LR
 git clone <this repo> && cd crash2sim
 python -m venv .venv && source .venv/bin/activate     # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-./scripts/setup_esmini.sh                              # or download esmini manually (see .env.example)
+./scripts/setup_esmini.sh                              # esmini demo package: simulator + 3D models
 cp .env.example .env                                   # set ESMINI_BIN
 
 # LLM (local, free): install Ollama from https://ollama.com, then
@@ -135,7 +135,7 @@ tests/                   pytest
 
 - 3 crash types. Next candidates: cut-in, pedestrian crossing, straight crossing path.
 - No crash physics after impact (vehicles are stopped). Initial distances are always assumed.
-- Videos use esmini's box models unless the esmini 3D model pack is installed; they render in daylight for readability.
+- Videos are rendered by esmini's own 3D viewer, with esmini's car and road models (from the demo package `setup_esmini.sh` downloads). Without the models, esmini falls back to boxes; the simulation results are identical either way. Videos render in daylight for readability.
 - Next: real CISS/SGO cases, LLM model comparison (llama3.1 vs. qwen2.5 vs. an API model), automatic sweeps over assumed parameters (reaction time, gap) to show which assumptions decide the outcome, and CARLA export.
 
 ## Team

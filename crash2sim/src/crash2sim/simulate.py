@@ -21,6 +21,25 @@ def esmini_bin_dir() -> Path:
     raise RuntimeError("esmini not found: set ESMINI_BIN to the folder containing esmini and dat2csv")
 
 
+def models_dir() -> Path | None:
+    """esmini 3D models (cars, road scenes). From ESMINI_MODELS or <esmini>/resources/models."""
+    d = os.getenv("ESMINI_MODELS")
+    cands = [Path(d)] if d else []
+    try:
+        cands.append(esmini_bin_dir().parent / "resources" / "models")
+    except RuntimeError:
+        pass
+    for c in cands:
+        if c.is_dir():
+            return c.resolve()
+    return None
+
+
+def _path_args() -> list[str]:
+    m = models_dir()
+    return ["--path", str(m)] if m else []
+
+
 def _exe(name: str) -> str:
     p = esmini_bin_dir() / (name + (".exe" if os.name == "nt" else ""))
     if not p.exists():
@@ -33,7 +52,7 @@ def run(xosc: Path, out_dir: Path, dt: float = 0.05) -> dict:
     out_dir.mkdir(parents=True, exist_ok=True)
     dat = out_dir / "sim.dat"
     cmd = [_exe("esmini"), "--headless", "--osc", str(xosc.resolve()), "--fixed_timestep", str(dt),
-           "--record", str(dat.resolve()), "--logfile_path", str((out_dir / "esmini_log.txt").resolve())]
+           "--record", str(dat.resolve()), "--logfile_path", str((out_dir / "esmini_log.txt").resolve())] + _path_args()
     p = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
     log = p.stdout + p.stderr
     subprocess.run([_exe("dat2csv"), str(dat.resolve())], capture_output=True, text=True, timeout=120)
@@ -63,7 +82,7 @@ def record_video(xosc: Path, out_mp4: Path, dt: float = 0.05, size=(960, 540),
             src.write_text(txt)
         cmd = [_exe("esmini"), "--window", "0", "0", str(size[0]), str(size[1]), "--osc", str(src),
                "--fixed_timestep", str(dt), "--capture_screen", "--disable_log", "--camera_mode", camera,
-               "--follow_object", "0", "--info_text", "0"]
+               "--follow_object", "0", "--info_text", "0", "--hide_route_waypoints"] + _path_args()
         if os.name != "nt" and not os.getenv("DISPLAY") and shutil.which("xvfb-run"):
             cmd = ["xvfb-run", "-a", "-s", f"-screen 0 {size[0]+100}x{size[1]+100}x24"] + cmd
         subprocess.run(cmd, cwd=tmp, capture_output=True, text=True, timeout=600)

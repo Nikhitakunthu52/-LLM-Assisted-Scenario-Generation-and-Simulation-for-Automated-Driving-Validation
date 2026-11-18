@@ -3,7 +3,7 @@
 <!-- Left Turn Across Path / Opposite Direction. Based on the esmini ltap-od example (MPL-2.0).   -->
 <!-- A SynchronizeAction makes the turning vehicle (NPC) reach the conflict zone when Ego does.   -->
 <OpenSCENARIO>
-   <FileHeader revMajor="1" revMinor="2" date="2026-11-18T17:12:10"
+   <FileHeader revMajor="1" revMinor="2" date="2026-11-18T17:16:34"
                description="crash2sim ltap_od from CISS_A2" author="crash2sim"/>
    <ParameterDeclarations>
       <ParameterDeclaration name="EgoVehicle"       parameterType="string" value="car_white"/>
@@ -29,6 +29,7 @@
    </CatalogLocations>
    <RoadNetwork>
       <LogicFile filepath="../../../sim_assets/xodr/fabriksgatan.xodr"/>
+      <SceneGraphFile filepath="fabriksgatan.osgb"/>
    </RoadNetwork>
    <Entities>
       <ScenarioObject name="Ego">
