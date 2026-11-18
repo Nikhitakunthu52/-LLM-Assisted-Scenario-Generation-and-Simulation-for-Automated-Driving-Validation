@@ -24,13 +24,19 @@ SYSTEM_PROMPT = """You convert police / NHTSA crash reports into a parameter set
 
 Return ONLY a JSON object that matches the provided schema. Rules:
 - scenario_type: "rear_end" if one vehicle strikes the back of another in the same lane;
-  "ltap_od" if a vehicle turns left across the path of an oncoming vehicle.
-- ego = the STRIKING vehicle in a rear_end, or the STRAIGHT-GOING vehicle in an ltap_od.
-  other = the struck lead vehicle (rear_end) or the left-turning vehicle (ltap_od).
+  "ltap_od" if a vehicle turns left across the path of an oncoming vehicle;
+  "head_on" if a vehicle crosses the center line and hits an oncoming vehicle front-to-front.
+- ego = the STRIKING vehicle in a rear_end, the STRAIGHT-GOING vehicle in an ltap_od, or the vehicle
+  that STAYED IN ITS LANE in a head_on.
+  other = the struck lead vehicle (rear_end), the left-turning vehicle (ltap_od), or the vehicle
+  that departed its lane (head_on).
   In SGO/ADS reports the ADS "subject vehicle" (SV) may be either role - decide from the movements.
 - Speeds in km/h (1 mph = 1.609 km/h). Use pre-crash / EDR speeds when given; else infer from
   the posted limit and context.
-- other.maneuver: decelerate | stopped | constant_speed (rear_end) or left_turn (ltap_od).
+- other.maneuver: decelerate | stopped | constant_speed (rear_end), left_turn (ltap_od),
+  lane_departure (head_on).
+- other.brake_ttc_s (head_on): seconds before impact the departing vehicle braked (EDR "Service Brake
+  Engaged" at -1.5 s -> 1.5); null if it did not brake. Use EDR speed at -5 s as other.speed_kph.
 - other.speed_kph is its initial speed; final_speed_kph its speed after slowing (0 = stops).
 - ego.reacts = true only if the ego driver/system braked or steered before impact.
   reaction_time_s = time from the hazard appearing to braking (alert ~0.8-1.2 s, distracted 2-4 s,
@@ -45,8 +51,15 @@ Never refuse. If text is redacted, use coded fields and typical values and say s
 
 def report_to_prompt(report: dict) -> str:
     coded = json.dumps(report.get("coded_fields", {}), indent=1)
+    edr = ""
+    if report.get("edr_precrash"):
+        lines = []
+        for veh, sigs in report["edr_precrash"].items():
+            for sig, series in sigs.items():
+                lines.append(f"{veh} {sig}: " + ", ".join(f"{t:+.1f}s={v}" for t, v in series))
+        edr = "\n\nEDR PRE-CRASH DATA (time relative to impact):\n" + "\n".join(lines)
     return (f"REPORT SOURCE: {report.get('source_type', 'unknown')}\n\n"
-            f"NARRATIVE:\n{report.get('narrative', '')}\n\nCODED FIELDS:\n{coded}\n\n"
+            f"NARRATIVE:\n{report.get('narrative', '')}\n\nCODED FIELDS:\n{coded}{edr}\n\n"
             "Produce the scenario JSON.")
 
 
@@ -104,7 +117,8 @@ def extract_rules(report: dict, model: str | None = None) -> dict:
     coded = report.get("coded_fields", {})
     text = (report.get("narrative", "") + " " + json.dumps(coded)).lower()
     ltap = any(k in text for k in ["left turn", "turning left", "turn left", "making left"])
-    stype = "ltap_od" if ltap else "rear_end"
+    head_on = "head-on" in text or "head on" in text
+    stype = "head_on" if head_on else "ltap_od" if ltap else "rear_end"
 
     light = "night" if "dark" in text else "dusk" if "dusk" in text or "dawn" in text else "day"
     weather = ("rain" if "rain" in text else "snow" if "snow" in text else
@@ -125,10 +139,12 @@ def extract_rules(report: dict, model: str | None = None) -> dict:
         "ego": {"vehicle": "car", "speed_kph": ego_speed, "reacts": braked and not stopped,
                 "reaction_time_s": 1.5 if braked else 0, "brake_decel_mps2": 6.0 if braked else 0},
         "other": {"vehicle": "car",
-                  "maneuver": "left_turn" if ltap else ("stopped" if stopped else "decelerate"),
+                  "maneuver": "lane_departure" if head_on else "left_turn" if ltap else
+                              ("stopped" if stopped else "decelerate"),
                   "speed_kph": 15.0 if ltap else (0.0 if stopped else ego_speed),
                   "final_speed_kph": 15.0 if ltap else 0.0,
-                  "decel_mps2": 0.0 if ltap else 3.0, "gap_m": None},
+                  "decel_mps2": 0.0 if ltap else 3.0, "gap_m": None,
+                  "brake_ttc_s": None},
         "collision_reported": any(k in text for k in ["struck", "contact", "collision", "impact"]),
         "assumptions": ["rules baseline: generic defaults for vehicles, reaction, deceleration"],
         "missing_info": [],

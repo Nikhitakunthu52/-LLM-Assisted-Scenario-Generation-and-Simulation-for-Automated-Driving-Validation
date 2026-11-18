@@ -18,7 +18,8 @@
     "speed_kph": 72.4,
     "final_speed_kph": 0.0,
     "decel_mps2": 3.0,
-    "gap_m": 30.2
+    "gap_m": 30.2,
+    "brake_ttc_s": null
   },
   "collision_reported": true,
   "assumptions": [

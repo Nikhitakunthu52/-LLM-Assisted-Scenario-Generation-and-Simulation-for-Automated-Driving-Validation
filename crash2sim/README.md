@@ -64,8 +64,9 @@ To watch a scenario interactively: `$ESMINI_BIN/esmini --window 60 60 1024 576 -
 |---|---|---|---|---|
 | `rear_end` | Lead vehicle decelerating or stopped | `straight_500m` | follows and strikes | brakes at t = 2 s |
 | `ltap_od` | Left turn across path, opposite direction | `fabriksgatan` (4-leg intersection) | goes straight | turns left, timed to the conflict point |
+| `head_on` | Lane departure into oncoming traffic | `straight_500m` (2 lanes, opposite directions) | stays in its lane, brakes | drifts over the center line, brakes at a set time to collision (from EDR) |
 
-Ego braking is triggered by **hazard onset + reaction time**: the lead vehicle's brake event, a time to collision under 4 s, or the turning vehicle getting within 25–35 m. Lighting, weather and surface go into an `EnvironmentAction`, and road friction is scaled.
+Ego braking is triggered by **hazard onset + reaction time**: the lead vehicle's brake event, a time to collision under 4 s, the turning vehicle getting within 25–35 m, or the oncoming vehicle starting to drift. Lighting, weather and surface go into an `EnvironmentAction`, and road friction is scaled.
 
 ## Data
 
@@ -74,7 +75,10 @@ Ego braking is triggered by **hazard onset + reaction time**: the lead vehicle's
 | A: in-depth investigation | NHTSA **CISS** case viewer (crashviewer.nhtsa.dot.gov) | narrative, EDR speeds, scaled scene diagrams |
 | B: ADS incident report | NHTSA **Standing General Order 2021-01** CSVs | real automated-vehicle crashes; narratives often redacted |
 
-> ⚠️ **The 4 reports in `data/reports/` are illustrative placeholders** (`"synthetic": true`). They follow the structure of each source but are not real cases. Before the results are cited, swap in 2 real cases per type (same JSON shape) and update `data/ground_truth/` and `data/coverage.csv`.
+**Real case: `CIREN_8392`** (NHTSA CIREN 3-C4-2017-002, head-on, 2017). Converted from a Crash Viewer export with
+`python scripts/ciren_to_report.py data/raw/<export>.xlsx --id CIREN_8392`. The converter keeps only crash, roadway and vehicle fields plus EDR pre-crash data. Occupant, medical and demographic data are dropped, and raw exports in `data/raw/` are gitignored.
+
+> ⚠️ **The 4 `CISS_*` / `SGO_*` reports are still illustrative placeholders** (`"synthetic": true`). Replace them with real cases (see `docs/FRIDAY_GUIDE.md`) before the results are cited.
 
 ### Finding 1: in-depth reports have enough detail; ADS reports mostly don't
 
@@ -84,13 +88,27 @@ Ego braking is triggered by **hazard onset + reaction time**: the lead vehicle's
 - SGO reports cover **50–55 %**. Narratives are redacted, and there are no distances or timing.
 - **No report type gives initial distances or positions.** The simulation always has to assume them.
 
-### Finding 2: the simulation reproduces the crash when the timing assumptions are right
+### Finding 2: a real case with EDR data can be reproduced quantitatively
+
+CIREN_8392: a Ford Focus drifts over the center line at night and hits an oncoming Honda Civic. After setting the Focus speed and brake timing from its EDR, and assuming the Civic's speed and reaction time:
+
+| Check | Simulation | Report |
+|---|---|---|
+| Focus (encroaching) impact speed | **70.0 km/h** | 70.6 km/h (EDR) |
+| Focus brake onset before impact | 1.5 s | 1.5 s (EDR) |
+| Civic impact speed | **42.6 km/h** | ~41 km/h (from delta-V + masses) |
+| Closing speed | **112.6 km/h** | ~112 km/h (ΔV₁ + ΔV₂, momentum) |
+
+The no-LLM baseline also "reproduces" this crash, but at a **177 km/h** closing speed. A yes/no crash match isn't enough; impact speeds are the real test (`outputs/<backend>/CIREN_8392/validation.json`).
+Data quality note: the narrative says the limit is 80 km/h (55 mph), but 55 mph is 89 km/h, which is what the coded field says.
+
+### Finding 3: the simulation reproduces the crash when the timing assumptions are right
 
 ![results matrix](outputs/results_matrix.png)
 
-- With hand-built specs, 3 of 4 scenarios reproduce the reported crash. In **CISS_A2** the simulated impact speed is **32.6 km/h vs. 32 km/h** on the EDR.
+- With hand-built specs, 4 of 5 scenarios reproduce the reported crash. In **CISS_A2** the simulated impact speed is **32.6 km/h vs. 32 km/h** on the EDR.
 - **SGO_B2** (fully redacted) does *not* reproduce: with the assumed values, the ADS stops in time. This is the key limitation: when the report lacks timing, the outcome depends on assumptions.
-- The no-LLM keyword baseline gets 73–91 % of the fields right but reproduces only 1 of 4 crashes. It can't infer reaction behavior or headway. **That gap is what the LLM column has to close.**
+- The no-LLM keyword baseline gets 73–91 % of the fields right but reproduces only 2 of 5 crashes, one of them at unrealistic speeds. It can't infer reaction behavior or headway. **That gap is what the LLM column has to close.**
 
 ## Repo layout
 
@@ -106,6 +124,8 @@ src/crash2sim/
 templates/               OpenSCENARIO templates with {{placeholders}}
 sim_assets/              esmini road networks + catalogs (MPL-2.0, see LICENSE file there)
 data/reports/            crash reports (JSON)
+data/raw/                raw Crash Viewer exports (gitignored - personal data)
+scripts/ciren_to_report.py   CIREN/CISS .xlsx export -> report JSON (privacy allowlist)
 data/ground_truth/       hand-built specs (manual recreation)
 data/coverage.csv        per-report data coverage assessment
 tests/                   pytest
@@ -113,7 +133,7 @@ tests/                   pytest
 
 ## Limitations and next steps
 
-- Only 2 crash types. Next candidates: cut-in, pedestrian crossing, straight crossing path.
+- 3 crash types. Next candidates: cut-in, pedestrian crossing, straight crossing path.
 - No crash physics after impact (vehicles are stopped). Initial distances are always assumed.
 - Videos use esmini's box models unless the esmini 3D model pack is installed; they render in daylight for readability.
 - Next: real CISS/SGO cases, LLM model comparison (llama3.1 vs. qwen2.5 vs. an API model), automatic sweeps over assumed parameters (reaction time, gap) to show which assumptions decide the outcome, and CARLA export.

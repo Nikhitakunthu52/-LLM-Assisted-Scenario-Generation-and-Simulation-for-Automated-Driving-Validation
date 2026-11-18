@@ -19,9 +19,10 @@ SCENARIO_SCHEMA: dict = {
     "properties": {
         "scenario_type": {
             "type": "string",
-            "enum": ["rear_end", "ltap_od"],
+            "enum": ["rear_end", "ltap_od", "head_on"],
             "description": "rear_end = ego follows and strikes a lead vehicle in the same lane; "
-                           "ltap_od = other vehicle turns left across ego's path from the opposite direction",
+                           "ltap_od = other vehicle turns left across ego's path from the opposite direction; "
+                           "head_on = other vehicle drifts over the center line into ego's lane from the opposite direction",
         },
         "environment": {
             "type": "object",
@@ -54,10 +55,12 @@ SCENARIO_SCHEMA: dict = {
             "properties": {
                 "vehicle": {"type": "string", "enum": VEHICLES},
                 "maneuver": {"type": "string",
-                             "enum": ["decelerate", "stopped", "constant_speed", "left_turn"]},
+                             "enum": ["decelerate", "stopped", "constant_speed", "left_turn", "lane_departure"]},
                 "speed_kph": {"type": "number", "minimum": 0, "maximum": 200},
                 "final_speed_kph": {"type": "number", "minimum": 0, "maximum": 200},
                 "decel_mps2": {"type": "number", "minimum": 0, "maximum": 12},
+                "brake_ttc_s": {"type": ["number", "null"], "minimum": 0, "maximum": 10,
+                                "description": "head_on only: seconds before impact the other vehicle braked (e.g. from EDR); null if it did not brake"},
                 "gap_m": {"type": ["number", "null"], "minimum": 0, "maximum": 300,
                           "description": "rear_end only: initial distance between vehicles; null if unknown"},
             },
@@ -104,6 +107,15 @@ def sanitize(spec: dict) -> tuple[dict, list[str]]:
             v = ego["speed_kph"] / 3.6
             oth["gap_m"] = round(max(10.0, (6.0 if oth["maneuver"] == "stopped" else 1.5) * v), 1)
             notes.append(f"pipeline: initial gap unknown, assumed {oth['gap_m']} m")
+    elif s["scenario_type"] == "head_on":
+        oth["maneuver"] = "lane_departure"
+        oth["gap_m"] = None
+        if oth["speed_kph"] < 5:
+            oth["speed_kph"] = 80.0
+            notes.append("pipeline: encroaching vehicle speed missing, assumed 80 km/h")
+        if oth.get("brake_ttc_s") and oth["decel_mps2"] <= 0:
+            oth["decel_mps2"] = 4.0
+            notes.append("pipeline: encroaching vehicle braking level missing, assumed 4.0 m/s^2")
     else:  # ltap_od
         oth["maneuver"] = "left_turn"
         oth["gap_m"] = None

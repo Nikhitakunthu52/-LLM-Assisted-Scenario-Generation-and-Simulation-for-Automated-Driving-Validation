@@ -12,3 +12,8 @@ esmini/
 outputs/**/sim.dat
 outputs/**/esmini_log.txt
 *_render.xosc
+
+# raw crash exports contain medical / personal data - never commit
+data/raw/
+*.xlsx
+*.xls

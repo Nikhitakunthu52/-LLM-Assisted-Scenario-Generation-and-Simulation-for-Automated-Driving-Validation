@@ -49,8 +49,10 @@ def metrics(csv: Path, other: str, collision_time: float | None) -> dict:
         tc = t[np.argmin(np.abs(t - collision_time))]
         res["impact_speed_ego_kph"] = round(float(e.speed.loc[tc]) * 3.6, 1)
         res["impact_speed_other_kph"] = round(float(o.speed.loc[tc]) * 3.6, 1)
-        res["delta_v_kph"] = round(abs(res["impact_speed_ego_kph"] - res["impact_speed_other_kph"]), 1) \
-            if other == "Lead" else None
+        if other == "Lead":
+            res["delta_v_kph"] = round(abs(res["impact_speed_ego_kph"] - res["impact_speed_other_kph"]), 1)
+        elif other == "Other":
+            res["closing_speed_kph"] = round(res["impact_speed_ego_kph"] + res["impact_speed_other_kph"], 1)
     return res
 
 
@@ -86,13 +88,13 @@ def road_lines(xodr: str) -> list[np.ndarray]:
 def scenario_figure(csv: Path, other: str, spec: dict, m: dict, title: str, out_png: Path) -> Path:
     d = simulate.load_csv(csv)
     e, o = d[d.name == "Ego"], d[d.name == other]
-    other_label = "Lead vehicle" if other == "Lead" else "Turning vehicle"
+    other_label = {"Lead": "Lead vehicle", "NPC": "Turning vehicle", "Other": "Encroaching vehicle"}[other]
     fig = plt.figure(figsize=(12, 4.6))
     gs = fig.add_gridspec(1, 3, width_ratios=[1.35, 1, 1], wspace=0.28)
 
     # 1) top-down trajectories
     ax = fig.add_subplot(gs[0])
-    xodr = "straight_500m.xodr" if spec["scenario_type"] == "rear_end" else "fabriksgatan.xodr"
+    xodr = "fabriksgatan.xodr" if spec["scenario_type"] == "ltap_od" else "straight_500m.xodr"
     for ln in road_lines(xodr):
         ax.plot(ln[:, 0], ln[:, 1], color=ROAD_C, lw=1, zorder=1)
     ax.plot(e.x, e.y, color=EGO_C, lw=2, zorder=3)
@@ -108,7 +110,7 @@ def scenario_figure(csv: Path, other: str, spec: dict, m: dict, title: str, out_
     pad = 15
     ax.set_xlim(allx.min() - pad, allx.max() + pad)
     ax.set_ylim(ally.min() - pad, ally.max() + pad)
-    if spec["scenario_type"] == "rear_end":
+    if spec["scenario_type"] in ("rear_end", "head_on"):
         ax.set_ylim(ally.mean() - 25, ally.mean() + 25)
     else:
         ax.set_aspect("equal", adjustable="box")
@@ -178,6 +180,7 @@ FIELDS = [
 
 
 def score(pred: dict, truth: dict) -> dict:
+    truth = {k: v for k, v in truth.items() if k != "validation_targets"}
     out = {}
     for name, get, kind in FIELDS:
         p, t = get(pred), get(truth)

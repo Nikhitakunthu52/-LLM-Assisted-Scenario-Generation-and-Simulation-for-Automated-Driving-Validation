@@ -1,0 +1,14 @@
+{
+  "encroaching_impact_kph": {
+    "sim": 88.5,
+    "report": 70.6
+  },
+  "ego_impact_kph": {
+    "sim": 88.5,
+    "report": 41
+  },
+  "closing_kph": {
+    "sim": 177.0,
+    "report": 112
+  }
+}

@@ -14,12 +14,14 @@
    CISS is about 80 % usable, the SGO/ADS reports about 50 %. No source gives distances or timing.
 3. **Live pipeline (2 min)**
    ```bash
-   cat data/reports/CISS_A2_left_turn.json            # show the narrative
-   python run_pipeline.py --backend ollama --reports "data/reports/CISS_A2*.json" --video
-   cat outputs/ollama/CISS_A2/spec.json                # LLM output + its assumptions list
-   head -30 scenarios/generated/ollama/CISS_A2.xosc    # generated OpenSCENARIO
+   cat data/reports/CIREN_8392_head_on.json            # REAL NHTSA case: narrative + EDR
+   python run_pipeline.py --backend ollama --reports "data/reports/CIREN*.json" --video
+   cat outputs/ollama/CIREN_8392/spec.json             # LLM output + its assumptions list
+   cat outputs/ollama/CIREN_8392/validation.json       # sim vs EDR impact speeds
+   head -30 scenarios/generated/ollama/CIREN_8392.xosc # generated OpenSCENARIO
    ```
-4. **Simulation (1.5 min)**: play `scenario.mp4`, then show `scenario.png`. Point out that the simulated impact speed is close to the report's EDR value of 32 km/h.
+4. **Simulation (1.5 min)**: play `outputs/ground_truth/CIREN_8392/scenario.mp4`, then show `scenario.png`.
+   Key line: the simulated impact speeds of 70 / 43 km/h match the EDR's 70.6 and the reconstruction's ~41 km/h.
 5. **Results (1.5 min)** → `results_matrix.png`. Compare manual, LLM and the keyword baseline. SGO_B2 doesn't reproduce: redacted reports leave the outcome to assumptions.
 6. **Learned + next (1 min)**: spec-plus-template beats raw XML; distance/timing is the missing data; next steps are real cases, a model comparison, parameter sweeps and CARLA.
 

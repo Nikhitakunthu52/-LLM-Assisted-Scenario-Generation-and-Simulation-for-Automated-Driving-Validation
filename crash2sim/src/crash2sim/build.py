@@ -161,6 +161,19 @@ def _cond_ttc(other: str, ttc: float, delay: float) -> str:
                            </Condition>"""
 
 
+def _cond_ttc_generic(trigger: str, target: str, ttc: str) -> str:
+    return f"""                           <Condition name="BrakeTTC" delay="0" conditionEdge="rising">
+                              <ByEntityCondition>
+                                 <TriggeringEntities triggeringEntitiesRule="any"><EntityRef entityRef="{trigger}"/></TriggeringEntities>
+                                 <EntityCondition>
+                                    <TimeToCollisionCondition value="{ttc}" freespace="true" rule="lessThan" relativeDistanceType="euclidianDistance" coordinateSystem="entity">
+                                       <TimeToCollisionConditionTarget><EntityRef entityRef="{target}"/></TimeToCollisionConditionTarget>
+                                    </TimeToCollisionCondition>
+                                 </EntityCondition>
+                              </ByEntityCondition>
+                           </Condition>"""
+
+
 def _cond_distance(other: str, dist_param: str, delay: float) -> str:
     return f"""                           <Condition name="HazardPerceived" delay="{delay}" conditionEdge="rising">
                               <ByEntityCondition>
@@ -209,6 +222,46 @@ def build_xosc(spec: dict, report_id: str, out_dir: Path) -> Path:
                       collision_group=_collision_group(other),
                       stop_conditions=_stop_conditions(25))
         tmpl = "rear_end.xosc.tmpl"
+    elif spec["scenario_type"] == "head_on":
+        other = "Other"
+        bt = oth.get("brake_ttc_s")
+        # Other brakes when its (closing) distance to Ego falls below what it covers in bt seconds.
+        other_brake = ""
+        if bt:
+            other_brake = f"""                  <Event name="OtherBrakeEvent" priority="parallel" maximumExecutionCount="1">
+                     <Action name="OtherBrake">
+                        <PrivateAction>
+                           <LongitudinalAction>
+                              <SpeedAction>
+                                 <SpeedActionDynamics dynamicsShape="linear" dynamicsDimension="rate" value="$OtherDecel"/>
+                                 <SpeedActionTarget><AbsoluteTargetSpeed value="$OtherFinalSpeed"/></SpeedActionTarget>
+                              </SpeedAction>
+                           </LongitudinalAction>
+                        </PrivateAction>
+                     </Action>
+                     <StartTrigger>
+                        <ConditionGroup>
+{_cond_ttc_generic("Other", "Ego", "$OtherBrakeTTC")}
+                        </ConditionGroup>
+                     </StartTrigger>
+                  </Event>"""
+        closing = kph(ego["speed_kph"]) + kph(oth["speed_kph"])
+        dep_dist = round(3.0 * closing, 1)            # drift starts ~3 s before the vehicles meet
+        ego_start = round(min(480.0, 20 + dep_dist + 2.0 * closing), 1)   # ~2 s of normal driving first
+        values = dict(common,
+                      ego_start_s=ego_start,
+                      other_speed=kph(oth["speed_kph"]),
+                      other_final_speed=kph(oth["final_speed_kph"]),
+                      other_decel=round(float(oth["decel_mps2"]) or 0.01, 2),
+                      other_brake_ttc=bt or 0,
+                      other_brake_event=other_brake,
+                      departure_distance=dep_dist,
+                      departure_lat_acc=round(4 * 3.5 / 2.5 ** 2, 2),  # 3.5 m drift in ~2.5 s
+                      departure_offset=3.5,
+                      ego_reaction_group=_brake_group(_cond_after_event("LaneDepartureEvent", rt)) if ego["reacts"] else "",
+                      collision_group=_collision_group(other),
+                      stop_conditions=_stop_conditions(25))
+        tmpl = "head_on.xosc.tmpl"
     else:
         other = "NPC"
         # Place the turning vehicle so it reaches the conflict point at its own (reported) speed:

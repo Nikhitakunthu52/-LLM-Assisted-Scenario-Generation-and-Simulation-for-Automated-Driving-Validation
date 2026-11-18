@@ -58,7 +58,7 @@ def main():
         truth = json.loads(truth_path.read_text()) if truth_path.exists() else None
         try:
             if args.backend == "ground_truth":
-                raw, secs = truth, 0.0
+                raw, secs = {k: v for k, v in truth.items() if k != "validation_targets"}, 0.0
             else:
                 raw, secs = extract.extract(report, args.backend, args.model)
         except Exception as e:  # noqa: BLE001
@@ -86,7 +86,7 @@ def main():
             print("  esmini failed:", sim["errors"][:3])
             rows.append(dict(row, status="sim_failed", errors="; ".join(sim["errors"][:3])))
             continue
-        other = "Lead" if spec["scenario_type"] == "rear_end" else "NPC"
+        other = {"rear_end": "Lead", "ltap_od": "NPC", "head_on": "Other"}[spec["scenario_type"]]
         m = analyze.metrics(sim["csv"], other, sim["collision_time"])
         m["reproduces_report"] = m["sim_collision"] == spec["collision_reported"]
         (out / "metrics.json").write_text(json.dumps(m, indent=2))
@@ -94,7 +94,7 @@ def main():
               f"-> reproduces report: {m['reproduces_report']}")
 
         # 4) figures / video
-        nice = {"rear_end": "Rear-end", "ltap_od": "Left turn across path"}[spec["scenario_type"]]
+        nice = {"rear_end": "Rear-end", "ltap_od": "Left turn across path", "head_on": "Head-on"}[spec["scenario_type"]]
         title = f"{rid} · {nice} · {tag}"
         analyze.scenario_figure(sim["csv"], other, spec, m, title, out / "scenario.png")
         if args.video:
@@ -102,6 +102,18 @@ def main():
             print("  video:", v.relative_to(ROOT) if v else "not rendered (needs a display or xvfb + ffmpeg)")
 
         # 5) score vs ground truth
+        vt = (truth or {}).get("validation_targets")
+        if vt and m.get("sim_collision"):
+            checks = {}
+            if "V1_impact_speed_kph" in vt:
+                checks["encroaching_impact_kph"] = [m.get("impact_speed_other_kph"), vt["V1_impact_speed_kph"]]
+            if "V2_impact_speed_kph_est" in vt:
+                checks["ego_impact_kph"] = [m.get("impact_speed_ego_kph"), vt["V2_impact_speed_kph_est"]]
+            if "closing_speed_kph_from_delta_v" in vt:
+                checks["closing_kph"] = [m.get("closing_speed_kph"), vt["closing_speed_kph_from_delta_v"]]
+            (out / "validation.json").write_text(json.dumps({k: {"sim": a, "report": b} for k, (a, b) in checks.items()}, indent=2))
+            print("  validation (sim vs report):", ", ".join(f"{k} {a} vs {b}" for k, (a, b) in checks.items()))
+
         if truth and args.backend != "ground_truth":
             sc = analyze.score(spec, truth)
             (out / "score_vs_ground_truth.json").write_text(json.dumps(sc, indent=2))

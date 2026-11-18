@@ -16,7 +16,7 @@ REPORTS = sorted((ROOT / "data" / "reports").glob("*.json"))
 def test_ground_truth_valid_and_buildable(tmp_path):
     assert GT
     for p in GT:
-        spec = json.loads(p.read_text())
+        spec = {k: v for k, v in json.loads(p.read_text()).items() if k != "validation_targets"}
         assert schema.validate(spec) == [], p.name
         clean, _ = schema.sanitize(spec)
         xosc = build.build_xosc(clean, p.stem, tmp_path)
@@ -32,8 +32,17 @@ def test_rules_backend_schema_valid():
 
 
 def test_sanitize_fills_missing_gap():
-    spec = json.loads(GT[0].read_text())
+    spec = json.loads((ROOT / "data" / "ground_truth" / "CISS_A1.json").read_text())
     if spec["scenario_type"] == "rear_end":
         spec["other"]["gap_m"] = None
         clean, notes = schema.sanitize(spec)
         assert clean["other"]["gap_m"] > 0 and notes
+
+
+def test_ciren_converter_drops_personal_data():
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from ciren_to_report import scrub_narrative
+    txt = "This crash involves a seriously-injured 32-year-old driver.\nV1, driven by the 32-year-old female driver (CIREN case subject), went west.\nThe driver was transported to a hospital."
+    out = scrub_narrative(txt)
+    assert "year-old" not in out and "hospital" not in out and "injur" not in out
+    assert "went west" in out

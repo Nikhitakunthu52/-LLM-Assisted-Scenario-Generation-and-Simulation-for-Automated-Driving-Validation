@@ -39,20 +39,23 @@ Set `ESMINI_BIN` to the folder that contains `esmini` / `esmini.exe`, for exampl
 ## 2. Smoke test (2 min)
 
 ```bash
-pytest -q                                          # 3 passed
+pytest -q                                          # 4 passed
 python run_pipeline.py --backend ground_truth --video
 ```
-You should see 4 reports with `reproduces report: True/False` and new files in `outputs/ground_truth/`.
+You should see 5 reports with `reproduces report: True/False` and new files in `outputs/ground_truth/`.
 Open one scenario in a window: `tools/esmini/bin/esmini --window 60 60 1024 576 --osc scenarios/generated/ground_truth/CISS_A2.xosc`
 
 ## 3. Replace the placeholder crash reports (Data team, Thu)
 
 The 4 files in `data/reports/` are **synthetic placeholders**. Replace them with 2 real cases of each type: 1 rear-end + 1 left turn across path per type.
 
-**Type A: CISS** (https://crashviewer.nhtsa.dot.gov → CISS Crash Viewer)
-1. Filter by crash type (rear-end; left turn across path / opposite direction). Pick cases with an EDR and a full narrative.
-2. Copy the case narrative into `narrative`.
-3. Copy the useful coded variables into `coded_fields`: light, weather, surface, speed limit, pre-crash movement, critical event, avoidance maneuver, EDR speeds.
+**Type A: CISS / CIREN** (https://crashviewer.nhtsa.dot.gov). Use the export, not copy-paste:
+1. Open a case (rear-end; left turn across path / opposite direction; head-on). Prefer cases with EDR data.
+2. Export the case to Excel and save it in `data/raw/` (gitignored: exports contain medical and personal data).
+3. Convert it: `python scripts/ciren_to_report.py data/raw/<export>.xlsx --id CISS_A1`
+   This writes `data/reports/CISS_A1.json` with the narrative (personal details removed), the coded fields and the EDR series.
+   Delete the placeholder file it replaces.
+4. Example already done: `CIREN_8392` (head-on), from the export Bala uploaded.
 
 **Type B: Standing General Order** (nhtsa.gov → Standing General Order on Crash Reporting → ADS incident report CSV)
 1. Open the CSV and filter `Crash With` / `SV Pre-Crash Movement` / `CP Pre-Crash Movement` for one rear-end and one left-turn case. Prefer rows where `Narrative` is not fully redacted.
@@ -74,6 +77,8 @@ Then, for each new report:
 - **Ground truth:** edit `data/ground_truth/<report_id>.json` by hand (what the team believes the scenario is). This is the manual "recreate the scenario from the data" step, and it's what the LLM gets scored against.
 - **Coverage:** update that row of `data/coverage.csv` (`stated` / `partial` / `missing` per column).
 - Remove the "placeholder" warning in `README.md` and update the two "Finding" sections with the new numbers.
+
+Optional: add `"validation_targets"` to the ground truth (see `data/ground_truth/CIREN_8392.json`) so the pipeline compares simulated impact speeds against EDR values.
 
 Check: `python run_pipeline.py --backend ground_truth` → does each one reproduce the crash? If not, adjust the assumptions in the ground truth file (gap, reaction time) and note why. That's a finding, too.
 

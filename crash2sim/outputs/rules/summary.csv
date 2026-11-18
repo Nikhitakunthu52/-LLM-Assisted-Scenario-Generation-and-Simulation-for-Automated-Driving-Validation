@@ -1,5 +1,6 @@
-report_id,source,backend,llm_seconds,field_accuracy,status,scenario_type,confidence,n_assumptions,xosc,sim_collision,collision_time_s,min_center_distance_m,ego_brake_start_s,duration_s,reproduces_report,impact_speed_ego_kph,impact_speed_other_kph,delta_v_kph
-CISS_A1,CISS-style investigation (in-depth),rules,0.0,0.82,ok,rear_end,low,2,scenarios/generated/rules/CISS_A1.xosc,False,,23.45,3.65,8.4,False,,,
-CISS_A2,CISS-style investigation (in-depth),rules,0.0,0.91,ok,ltap_od,low,1,scenarios/generated/rules/CISS_A2.xosc,False,,3.03,4.8,8.8,False,,,
-SGO_B1,NHTSA Standing General Order (ADS) incident report - style,rules,0.0,0.82,ok,rear_end,low,2,scenarios/generated/rules/SGO_B1.xosc,True,5.6,0.02,5.65,8.25,True,40.0,0.0,40.0
-SGO_B2,NHTSA Standing General Order (ADS) incident report - style,rules,0.0,0.73,ok,ltap_od,low,1,scenarios/generated/rules/SGO_B2.xosc,False,,3.03,24.6,26.1,False,,,
+report_id,source,backend,llm_seconds,field_accuracy,status,scenario_type,confidence,n_assumptions,xosc,sim_collision,collision_time_s,min_center_distance_m,ego_brake_start_s,duration_s,impact_speed_ego_kph,impact_speed_other_kph,closing_speed_kph,reproduces_report,delta_v_kph
+CIREN_8392,NHTSA CIREN/CISS in-depth investigation (Crash Viewer export),rules,0.0,0.82,ok,head_on,low,1,scenarios/generated/rules/CIREN_8392.xosc,True,4.85,0.51,4.9,8.85,88.5,88.5,177.0,True,
+CISS_A1,CISS-style investigation (in-depth),rules,0.0,0.82,ok,rear_end,low,2,scenarios/generated/rules/CISS_A1.xosc,False,,23.45,3.65,8.4,,,,False,
+CISS_A2,CISS-style investigation (in-depth),rules,0.0,0.91,ok,ltap_od,low,1,scenarios/generated/rules/CISS_A2.xosc,False,,3.03,4.8,8.8,,,,False,
+SGO_B1,NHTSA Standing General Order (ADS) incident report - style,rules,0.0,0.82,ok,rear_end,low,2,scenarios/generated/rules/SGO_B1.xosc,True,5.6,0.02,5.65,8.25,40.0,0.0,,True,40.0
+SGO_B2,NHTSA Standing General Order (ADS) incident report - style,rules,0.0,0.73,ok,ltap_od,low,1,scenarios/generated/rules/SGO_B2.xosc,False,,3.03,24.6,26.1,,,,False,

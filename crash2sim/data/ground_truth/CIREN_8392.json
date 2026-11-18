@@ -1,0 +1,22 @@
+{
+  "scenario_type": "head_on",
+  "environment": {"light": "night", "weather": "clear", "surface": "dry"},
+  "ego": {"vehicle": "car", "speed_kph": 88, "reacts": true, "reaction_time_s": 1.5, "brake_decel_mps2": 7.0},
+  "other": {"vehicle": "car", "maneuver": "lane_departure", "speed_kph": 84, "final_speed_kph": 0,
+            "decel_mps2": 2.5, "brake_ttc_s": 1.3, "gap_m": null},
+  "collision_reported": true,
+  "assumptions": ["ego = V2 Honda Civic (stayed in lane); other = V1 Ford Focus (crossed center line)",
+                  "V1 speed 84 km/h = EDR average over the 3 s before braking (91.7 at -5 s, coasting to 81.8 at -1.5 s)",
+                  "V1 brake 2.5 m/s^2 (EDR 81.8 -> 70.6 km/h over 1.5 s); brake_ttc 1.3 s gives EDR brake onset at -1.5 s in sim",
+                  "ego initial speed 88 km/h (~55 mph limit; V2 had no EDR)",
+                  "ego reaction 1.5 s after V1 starts drifting (dark, unlit road), brake 7 m/s^2 (dry)",
+                  "V1 drift starts ~3 s before the vehicles meet, completes in ~2.5 s (not in report)",
+                  "steering avoidance by both drivers not modeled"],
+  "missing_info": ["V2 speed (no EDR)", "when / where V1 crossed the center line",
+                   "narrative says 80 km/h limit, coded field says 89 km/h (55 mph)"],
+  "confidence": "medium",
+  "validation_targets": {"V1_impact_speed_kph": 70.6, "V1_brake_onset_before_impact_s": 1.5,
+                         "closing_speed_kph_from_delta_v": 112,
+                         "V2_impact_speed_kph_est": 41,
+                         "note": "closing speed from momentum: dV1+dV2 with masses 1340/1199 kg -> ~110-114 km/h; CIREN flags delta-V 'results appear low'"}
+}

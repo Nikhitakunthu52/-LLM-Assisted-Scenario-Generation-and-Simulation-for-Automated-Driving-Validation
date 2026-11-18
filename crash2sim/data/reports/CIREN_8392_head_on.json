@@ -1,0 +1,217 @@
+{
+  "report_id": "CIREN_8392",
+  "source_type": "NHTSA CIREN/CISS in-depth investigation (Crash Viewer export)",
+  "synthetic": false,
+  "case_id": "3-C4-2017-002",
+  "narrative": "This two-vehicle collision occurred during the predawn hours (dark, unlit) on a straight three-lane roadway. The east/west roadway consists of one eastbound lane and two westbound lanes, with a four percent uphill grade for the westbound lanes. There was a three percent downhill grade for the eastbound travel direction. The roadway is straight, with a speed limit of 80 km/h (55 mph). At the time of the crash, the weather was clear and the roadway surfaces were dry.\n\nVehicle 1, the 2014 Ford Focus sedan, was being driven by the driver in the far left, westbound travel lane, attempting to go straight and continue heading west.\n\nVehicle 2, a 2010 Honda Civic four-door sedan, was traveling eastbound in the single eastbound lane attempting to go straight and continue heading east.\n\nVehicle 1 crossed the solid double yellow center lane lines into the oncoming traffic lane. The driver of Vehicle 2 noticed the other vehicle encroaching into her lane, applied the vehicle’s brakes, and steered left in an attempt to avoid a collision. The driver of Vehicle 1 noticed that she was in the opposing lane and steered right also in an attempt to avoid a collision with Vehicle 2. Both drivers were unsuccessful in avoiding the collision. The front of Vehicle 1 struck the front of Vehicle 2 (event 1). Vehicle 1 rotated clockwise before coming to rest in a northwesterly direction while straddling the solid double yellow lane lines. Vehicle 2 rotated counterclockwise before coming to rest in a northeasterly direction while also straddling the solid double yellow lane lines. Both vehicles were towed from the scene due to damage sustained in the crash.",
+  "coded_fields": {
+    "casenumber": "3-C4-2017-002",
+    "crashyear": 2017,
+    "crashmonth": 10,
+    "vehicles": 2,
+    "mancoll": "HEAD-ON",
+    "V1_modelyr": 2014,
+    "V1_make": "Ford",
+    "V1_model": "Focus",
+    "V1_bodytype": "4-door sedan, hardtop",
+    "V1_curbwt": 1340,
+    "V1_speedlimit": 89,
+    "V1_trafflow": "Not physically divided (two way traffic)",
+    "V1_initlane": "Two",
+    "V1_alignment": "Straight",
+    "V1_profile": "Uphill grade (>=2%)",
+    "V1_surfcond": "Dry",
+    "V1_lightcond": "Dark",
+    "V1_weather": "Clear",
+    "V1_trafdev": "No traffic control(s)",
+    "V1_reltojunct": "Non-interchange area and non-junction",
+    "V1_premove": "Going straight",
+    "V1_critcat": "This Vehicle Traveling",
+    "V1_critevent": "Over the lane line on left side of travel lane",
+    "V1_maneuver": "Steering right",
+    "V1_prestab": "Tracking",
+    "V1_preloc": "Stayed on roadway, but left original travel lane",
+    "V1_crashcat": "Same Trafficway, Opposite Direction",
+    "V1_crashconf": "Head-On",
+    "V1_crashtype": "Lateral Move (Left/Right)",
+    "V1_damplane": "Front",
+    "V1_dvtotal": 52,
+    "V1_dvlong": -51,
+    "V1_dvlat": 9,
+    "V1_dvconf": "Collision fits model - results appear low",
+    "V1_distract": "Inattentive or distracted",
+    "V2_modelyr": 2010,
+    "V2_make": "Honda",
+    "V2_model": "Civic/CRX, del Sol",
+    "V2_bodytype": "4-door sedan, hardtop",
+    "V2_curbwt": 1199,
+    "V2_speedlimit": 89,
+    "V2_trafflow": "Not physically divided (two way traffic)",
+    "V2_initlane": "One",
+    "V2_alignment": "Straight",
+    "V2_profile": "Downhill grade (>=2%)",
+    "V2_surfcond": "Dry",
+    "V2_lightcond": "Dark",
+    "V2_weather": "Clear",
+    "V2_trafdev": "No traffic control(s)",
+    "V2_reltojunct": "Non-interchange area and non-junction",
+    "V2_premove": "Going straight",
+    "V2_critcat": "Other Motor Vehicle Encroaching Into Lane",
+    "V2_critevent": "From adjacent lane (same direction) over left lane line",
+    "V2_maneuver": "Unknown",
+    "V2_prestab": "Precrash stability unknown",
+    "V2_preloc": "Stayed in original travel lane",
+    "V2_crashcat": "Same Trafficway, Opposite Direction",
+    "V2_crashconf": "Head-On",
+    "V2_crashtype": "Lateral Move (Going Straight)",
+    "V2_damplane": "Front",
+    "V2_dvtotal": 60,
+    "V2_dvlong": -59,
+    "V2_dvlat": -10,
+    "V2_dvconf": "Collision fits model - results appear low",
+    "V2_distract": "Unknown",
+    "V1_pre_event": "Lane departure-left side"
+  },
+  "edr_precrash": {
+    "V1": {
+      "accelerator_pct": [
+        [
+          -5.0,
+          "0.0000"
+        ],
+        [
+          -4.5,
+          "0.0000"
+        ],
+        [
+          -4.0,
+          "0.0000"
+        ],
+        [
+          -3.5,
+          "0.0000"
+        ],
+        [
+          -3.0,
+          "0.0000"
+        ],
+        [
+          -2.5,
+          "0.0000"
+        ],
+        [
+          -2.0,
+          "0.0000"
+        ],
+        [
+          -1.5,
+          "0.0000"
+        ],
+        [
+          -1.0,
+          "0.0000"
+        ],
+        [
+          -0.5,
+          "0.0000"
+        ],
+        [
+          0.0,
+          "0.0000"
+        ]
+      ],
+      "service_brake": [
+        [
+          -5.0,
+          "Non-Engaged"
+        ],
+        [
+          -4.5,
+          "Non-Engaged"
+        ],
+        [
+          -4.0,
+          "Non-Engaged"
+        ],
+        [
+          -3.5,
+          "Non-Engaged"
+        ],
+        [
+          -3.0,
+          "Non-Engaged"
+        ],
+        [
+          -2.5,
+          "Non-Engaged"
+        ],
+        [
+          -2.0,
+          "Non-Engaged"
+        ],
+        [
+          -1.5,
+          "Engaged"
+        ],
+        [
+          -1.0,
+          "Engaged"
+        ],
+        [
+          -0.5,
+          "Engaged"
+        ],
+        [
+          0.0,
+          "Engaged"
+        ]
+      ],
+      "speed_kph": [
+        [
+          -5.0,
+          "91.7000"
+        ],
+        [
+          -4.5,
+          "90.5000"
+        ],
+        [
+          -4.0,
+          "89.0000"
+        ],
+        [
+          -3.5,
+          "87.5000"
+        ],
+        [
+          -3.0,
+          "86.1000"
+        ],
+        [
+          -2.5,
+          "84.6000"
+        ],
+        [
+          -2.0,
+          "83.1000"
+        ],
+        [
+          -1.5,
+          "81.8000"
+        ],
+        [
+          -1.0,
+          "79.2000"
+        ],
+        [
+          -0.5,
+          "70.8000"
+        ],
+        [
+          0.0,
+          "70.6000"
+        ]
+      ]
+    }
+  }
+}
