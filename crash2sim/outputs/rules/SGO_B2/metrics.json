@@ -1,0 +1,8 @@
+{
+  "sim_collision": false,
+  "collision_time_s": null,
+  "min_center_distance_m": 3.03,
+  "ego_brake_start_s": 24.6,
+  "duration_s": 26.1,
+  "reproduces_report": false
+}

@@ -1,0 +1,30 @@
+{
+  "scenario_type": "rear_end",
+  "environment": {
+    "light": "day",
+    "weather": "clear",
+    "surface": "icy"
+  },
+  "ego": {
+    "vehicle": "car",
+    "speed_kph": 72.4,
+    "reacts": true,
+    "reaction_time_s": 1.5,
+    "brake_decel_mps2": 6.0
+  },
+  "other": {
+    "vehicle": "car",
+    "maneuver": "decelerate",
+    "speed_kph": 72.4,
+    "final_speed_kph": 0.0,
+    "decel_mps2": 3.0,
+    "gap_m": 30.2
+  },
+  "collision_reported": true,
+  "assumptions": [
+    "rules baseline: generic defaults for vehicles, reaction, deceleration",
+    "pipeline: initial gap unknown, assumed 30.2 m"
+  ],
+  "missing_info": [],
+  "confidence": "low"
+}

@@ -1,0 +1,22 @@
+{
+  "report_id": "CISS_A2",
+  "source_type": "CISS-style investigation (in-depth)",
+  "synthetic": true,
+  "note": "ILLUSTRATIVE placeholder written in the structure of an NHTSA CISS case (narrative + coded variables). Replace with a real case from https://crashviewer.nhtsa.dot.gov before citing results.",
+  "narrative": "This crash occurred at a four-leg intersection controlled by traffic signals with permissive left-turn phasing. It was dark but the intersection was lighted, and light rain was falling; the road surface was wet. The posted speed limit on both approaches was 56 km/h (35 mph). Vehicle 1 (V1), a 2014 pickup truck, was northbound in the inside lane and intended to turn left (west). Vehicle 2 (V2), a 2020 sedan, was southbound in the inside lane intending to go straight through the intersection at approximately 50 km/h. The driver of V1 began the left turn at about 15 km/h across the path of V2. The driver of V2 braked and attempted to steer right but could not avoid the collision. The front of V2 struck the right side of V1 in the intersection. V2's EDR recorded a speed of 51 km/h 2.0 seconds before impact and 32 km/h at impact.",
+  "coded_fields": {
+    "crash_type": "Left turn across path - opposite direction (LTAP/OD)",
+    "light_condition": "Dark - lighted",
+    "weather": "Rain",
+    "surface_condition": "Wet",
+    "intersection": "Four-leg, signalized",
+    "speed_limit_kph": 56,
+    "V1_precrash_movement": "Turning left",
+    "V1_speed_estimate_kph": 15,
+    "V2_precrash_movement": "Going straight",
+    "V2_critical_event": "Other vehicle turning across path",
+    "V2_avoidance_maneuver": "Braking and steering right",
+    "V2_edr_speed_kph_minus2s": 51,
+    "V2_edr_speed_kph_impact": 32
+  }
+}

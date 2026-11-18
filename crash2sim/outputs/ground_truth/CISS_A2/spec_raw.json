@@ -1,0 +1,34 @@
+{
+  "scenario_type": "ltap_od",
+  "environment": {
+    "light": "night",
+    "weather": "rain",
+    "surface": "wet"
+  },
+  "ego": {
+    "vehicle": "car",
+    "speed_kph": 51,
+    "reacts": true,
+    "reaction_time_s": 0.8,
+    "brake_decel_mps2": 6.0
+  },
+  "other": {
+    "vehicle": "pickup",
+    "maneuver": "left_turn",
+    "speed_kph": 20,
+    "final_speed_kph": 15,
+    "decel_mps2": 0,
+    "gap_m": null
+  },
+  "collision_reported": true,
+  "assumptions": [
+    "ego reaction 0.8 s (alert driver, braked + steered)",
+    "wet-road braking 6 m/s^2 (EDR: 51 -> 32 km/h in 2 s ~ 2.6 m/s^2 average incl. reaction)",
+    "turning vehicle approach speed 20 km/h"
+  ],
+  "missing_info": [
+    "distance between vehicles when turn started",
+    "intersection geometry"
+  ],
+  "confidence": "high"
+}

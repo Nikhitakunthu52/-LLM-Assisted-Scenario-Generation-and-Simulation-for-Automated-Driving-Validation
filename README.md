@@ -3,3 +3,9 @@ Develop an AI and LLM assisted framework capable of automatically generating Ope
 
 
 **Shared Drive Link- https://drive.google.com/drive/folders/1Fy5c19ChhN30NuHSME3bqYfXhyAnmNS-?usp=drive_link**
+
+## Milestone demo - Nov 20, 2026: `crash2sim/`
+
+Crash report → LLM → OpenSCENARIO → esmini pipeline, with data coverage findings and comparison results.
+Start here: [crash2sim/README.md](crash2sim/README.md) · Demo run sheet: [crash2sim/docs/DEMO_SCRIPT.md](crash2sim/docs/DEMO_SCRIPT.md)
+

@@ -1,0 +1,21 @@
+{
+  "report_id": "SGO_B1",
+  "source_type": "NHTSA Standing General Order (ADS) incident report - style",
+  "synthetic": true,
+  "note": "ILLUSTRATIVE placeholder written in the structure of an SGO 2021-01 CSV row. Replace with a real row from the SGO ADS CSV (nhtsa.gov/laws-regulations/standing-general-order-crash-reporting) before citing results.",
+  "narrative": "The ADS-equipped subject vehicle (SV) was operating in autonomous mode on a two-lane urban street when it decelerated for a traffic signal changing to yellow and came to a stop. A passenger car (crash partner, CP) traveling behind the SV in the same lane at approximately 40 km/h did not stop and made contact with the rear bumper of the SV. [REDACTED, MAY CONTAIN CONFIDENTIAL BUSINESS INFORMATION]",
+  "coded_fields": {
+    "Crash With": "Passenger Car",
+    "Roadway Type": "Street",
+    "Roadway Surface": "Dry",
+    "Lighting": "Daylight",
+    "Weather - Clear": "Y",
+    "Posted Speed Limit (MPH)": 30,
+    "SV Pre-Crash Movement": "Stopped",
+    "SV Precrash Speed (MPH)": 0,
+    "CP Pre-Crash Movement": "Proceeding Straight",
+    "SV Contact Area - Rear": "Y",
+    "CP Contact Area - Front": "Y",
+    "Narrative": "[partially redacted]"
+  }
+}

@@ -1,0 +1,5 @@
+report_id,source,backend,llm_seconds,status,scenario_type,confidence,n_assumptions,xosc,sim_collision,collision_time_s,min_center_distance_m,ego_brake_start_s,duration_s,impact_speed_ego_kph,impact_speed_other_kph,delta_v_kph,reproduces_report
+CISS_A1,CISS-style investigation (in-depth),ground_truth,0.0,ok,rear_end,high,4,scenarios/generated/ground_truth/CISS_A1.xosc,True,5.25,0.02,4.5,8.1,47.8,24.7,23.1,True
+CISS_A2,CISS-style investigation (in-depth),ground_truth,0.0,ok,ltap_od,high,3,scenarios/generated/ground_truth/CISS_A2.xosc,True,5.2,2.7,4.45,7.65,32.6,15.0,,True
+SGO_B1,NHTSA Standing General Order (ADS) incident report - style,ground_truth,0.0,ok,rear_end,medium,4,scenarios/generated/ground_truth/SGO_B1.xosc,True,5.2,0.03,5.25,7.85,40.0,6.0,34.0,True
+SGO_B2,NHTSA Standing General Order (ADS) incident report - style,ground_truth,0.0,ok,ltap_od,low,3,scenarios/generated/ground_truth/SGO_B2.xosc,False,,8.24,5.75,8.6,,,,False
