@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenDRIVE>
+  <header revMajor="1" revMinor="6" name="CIREN case 189 road" version="1.0" date="2026-11-20"
+          north="0" south="0" east="0" west="0"/>
+  <!-- Right-hand curve, R = 492 m (solved from the EDR path).
+       Reference line = left edge of the northbound lane. x = east, y = north. -->
+  <road name="NB_ramp" length="270.165" id="1" junction="-1">
+    <link/>
+    <type s="0" type="rural"><speed max="72" unit="km/h"/></type>
+    <planView>
+      <geometry s="0" x="-0.0000" y="-0.0000" hdg="1.875706" length="270.165"><arc curvature="-0.00203050"/></geometry>
+    </planView>
+    <elevationProfile><elevation s="0" a="0" b="0" c="0" d="0"/></elevationProfile>
+    <lateralProfile/>
+    <lanes>
+      <laneSection s="0">
+        <left><lane id="4" type="shoulder" level="false"><link/><width sOffset="0" a="1.0" b="0" c="0" d="0"/></lane><lane id="3" type="driving" level="false"><link/><width sOffset="0" a="3.6" b="0" c="0" d="0"/><roadMark sOffset="0" type="solid" weight="standard" color="standard" width="0.15" laneChange="none"/></lane><lane id="2" type="median" level="false"><link/><width sOffset="0" a="8.0" b="0" c="0" d="0"/></lane><lane id="1" type="shoulder" level="false"><link/><width sOffset="0" a="1.2" b="0" c="0" d="0"/></lane></left>
+        <center><lane id="0" type="none" level="false"><link/><roadMark sOffset="0" type="solid" weight="standard" color="yellow" width="0.15" laneChange="none"/></lane></center>
+        <right><lane id="-1" type="driving" level="false"><link/><width sOffset="0" a="3.6" b="0" c="0" d="0"/><roadMark sOffset="0" type="solid" weight="standard" color="standard" width="0.15" laneChange="none"/></lane><lane id="-2" type="shoulder" level="false"><link/><width sOffset="0" a="3.1" b="0" c="0" d="0"/></lane></right>
+      </laneSection>
+    </lanes>
+  </road>
+</OpenDRIVE>
