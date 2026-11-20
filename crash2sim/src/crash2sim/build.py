@@ -185,8 +185,12 @@ def _cond_distance(other: str, dist_param: str, delay: float) -> str:
                            </Condition>"""
 
 
-def build_xosc(spec: dict, report_id: str, out_dir: Path) -> Path:
-    """Render a validated + sanitized spec into an .xosc file. Returns the path."""
+def build_xosc(spec: dict, report_id: str, out_dir: Path, daylight: bool = False) -> Path:
+    """Render a validated + sanitized spec into an .xosc file. Returns the path.
+
+    daylight=True leaves out the report's lighting/weather (for viewing/demos); the crash
+    timing and speeds are identical. Road friction from the report is kept.
+    """
     out_dir.mkdir(parents=True, exist_ok=True)
     out = out_dir / f"{report_id}.xosc"
     assets = os.path.relpath(ASSETS, out_dir).replace(os.sep, "/")
@@ -202,7 +206,8 @@ def build_xosc(spec: dict, report_id: str, out_dir: Path) -> Path:
         "ego_speed": kph(ego["speed_kph"]),
         "reaction_time": rt,
         "ego_decel": round(float(ego["brake_decel_mps2"]) or 6.0, 2),
-        "environment_action": environment_action(env),
+        "environment_action": environment_action(dict(env, light="day", weather="clear")) if daylight
+                              else environment_action(env),
     }
 
     if spec["scenario_type"] == "rear_end":

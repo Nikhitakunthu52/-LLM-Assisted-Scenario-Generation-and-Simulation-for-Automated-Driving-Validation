@@ -1,0 +1,136 @@
+esmini GIT REV: v3.11.0-0-6ce66361
+esmini GIT TAG: v3.11.0
+esmini GIT BRANCH: tags/v3.11.0^0
+esmini BUILD VERSION: 6481
+[] [info] Loaded config file: /home/claude/tools/demo/esmini-demo/config.yml (/home/claude/tools/demo/esmini-demo/bin/../config.yml)
+[] [info] Loaded scenarios/demo/SGO_B2.xosc
+[2026-11-20 09:15:31]
+[] [info] Player options: --osc scenarios/demo/SGO_B2.xosc --camera_mode orbit --fixed_timestep 0.05 --ground_plane auto --headless --info_text 1 --logfile_path log.txt --log_level info --text_scale 1.0 --traj_filter 0.1 --light_mode auto 
+[] [info] Run simulation decoupled from realtime, with fixed timestep: 0.05
+[] [info] Generated seed 1223699626
+[] [info] Loading scenarios/demo/SGO_B2.xosc (v1.2)
+[] [info] 0 variables
+[] [info] Loaded OpenDRIVE: sim_assets/xodr/fabriksgatan.xodr
+[] [info] Expr ${250/3.6} = 250/3.6 = 69.4444444444
+[] [info] Add and deactivate new object "Ego" (id 0)
+[] [info] Add and deactivate new object "NPC" (id 1)
+[] [info] Parsing global action EnvironmentAction
+[] [info] Added route waypoint 0, 0.00: road_id 0 lane_id 1 s 63.00 (scenario)
+[] [info] Added route waypoint 1, 68.07: road_id 9 lane_id -1 s 5.07 (intermediate)
+[] [info] Added route waypoint 2, 377.57: road_id 2 lane_id 1 s 5.00 (scenario)
+[] [info] Added route waypoint 0, 0.00: road_id 0 lane_id 1 s 63.00 (scenario)
+[] [info] Added route waypoint 1, 68.07: road_id 9 lane_id -1 s 5.07 (intermediate)
+[] [info] Added route waypoint 2, 377.57: road_id 2 lane_id 1 s 5.00 (scenario)
+[] [info] Position on route at roadId=0, s=63.00
+[] [info] Added route waypoint 0, 0.00: road_id 2 lane_id -1 s 100.00 (scenario)
+[] [info] Added route waypoint 1, 209.10: road_id 15 lane_id -1 s 4.91 (intermediate)
+[] [info] Added route waypoint 2, 224.06: road_id 1 lane_id -1 s 5.00 (scenario)
+[] [info] Added route waypoint 0, 0.00: road_id 2 lane_id -1 s 100.00 (scenario)
+[] [info] Added route waypoint 1, 209.10: road_id 15 lane_id -1 s 4.91 (intermediate)
+[] [info] Added route waypoint 2, 224.06: road_id 1 lane_id -1 s 5.00 (scenario)
+[] [info] Position on route at roadId=2, s=275.50
+[] [info] Added route waypoint 0, 0.00: road_id 2 lane_id -1 s 100.00 (scenario)
+[] [info] Added route waypoint 1, 209.10: road_id 15 lane_id -1 s 4.91 (intermediate)
+[] [info] Added route waypoint 2, 224.06: road_id 1 lane_id -1 s 5.00 (scenario)
+[] [info] Position on route at roadId=2, s=303.00
+[] [info] 12 parameters:
+[] [info]    HazardDistance = 25
+[] [info]    EgoBrakeDecel = 7.0
+[] [info]    EgoReactionTime = 0.5
+[] [info]    EgoSyncS = 7
+[] [info]    NPCSyncPathS = 203
+[] [info]    NPCStartPathS = 175.5
+[] [info]    EgoStartPathS = 0
+[] [info]    NPCTurnSpeed = 4.167
+[] [info]    NPCInitialSpeed = 5.556
+[] [info]    EgoSpeed = 9.722
+[] [info]    NPCVehicle = car_blue
+[] [info]    EgoVehicle = car_white
+[0.000] [info] Init EnvironmentAction initState -> startTransition -> runningState
+[0.000] [info] Init EnvironmentAction runningState -> stopTransition -> completeState
+[0.000] [info] Init Ego RoutingAction initState -> startTransition -> runningState
+[0.000] [info] Init Ego TeleportAction initState -> startTransition -> runningState
+[0.000] [info] Starting teleport Action
+[0.000] [info] Entity Ego on route at roadId=0, s=63.00
+[0.000] [info] Ego New position:
+[0.000] [info] Pos(42.98, -71.25, 0.00) Rot(1.78, 0.00, 0.00) roadId 0 laneId 1 s 63.00 offset 0.00 t 1.75
+[0.000] [info] Init Ego TeleportAction runningState -> endTransition -> completeState
+[0.000] [info] Init Ego LongitudinalAction initState -> startTransition -> runningState
+[0.000] [info] Init Ego LongitudinalAction runningState -> endTransition -> completeState
+[0.000] [info] Init NPC RoutingAction initState -> startTransition -> runningState
+[0.000] [info] Init NPC TeleportAction initState -> startTransition -> runningState
+[0.000] [info] Starting teleport Action
+[0.000] [info] Entity NPC on route at roadId=2, s=275.50
+[0.000] [info] NPC New position:
+[0.000] [info] Pos(17.32, 32.84, 0.00) Rot(4.89, 0.00, 0.00) roadId 2 laneId -1 s 275.50 offset 0.00 t -1.75
+[0.000] [info] Init NPC TeleportAction runningState -> endTransition -> completeState
+[0.000] [info] Init NPC LongitudinalAction initState -> startTransition -> runningState
+[0.000] [info] Init NPC LongitudinalAction runningState -> endTransition -> completeState
+[0.000] [info] storyBoard initState -> startTransition -> runningState
+[0.000] [info] LTAPStory initState -> startTransition -> runningState
+[0.000] [info] LTAPAct initState -> initToStandbyTransition -> standbyState
+[0.000] [info] Init Ego RoutingAction runningState -> endTransition -> completeState
+[0.000] [info] Init NPC RoutingAction runningState -> endTransition -> completeState
+[0.050] [info] ActStart: true, delay: 0.00, 0.0500 > 0.0000, edge: none
+[0.050] [info] Trigger /------------------------------------------------
+[0.050] [info] Group 0:
+[0.050] [info] ActStart: true
+[0.050] [info] Trigger  ------------------------------------------------/
+[0.050] [info] LTAPAct standbyState -> startTransition -> runningState
+[0.050] [info] NPCGroup initState -> startTransition -> runningState
+[0.050] [info] NPCManeuver initState -> startTransition -> runningState
+[0.050] [info] SyncEvent initState -> initToStandbyTransition -> standbyState
+[0.050] [info] EgoReactionGroup initState -> startTransition -> runningState
+[0.050] [info] EgoReaction initState -> startTransition -> runningState
+[0.050] [info] EgoBrakeEvent initState -> initToStandbyTransition -> standbyState
+[0.050] [info] ImpactGroup initState -> startTransition -> runningState
+[0.050] [info] Impact initState -> startTransition -> runningState
+[0.050] [info] ImpactEvent initState -> initToStandbyTransition -> standbyState
+[0.050] [info] SyncStart: true, delay: 0.00, LTAPAct, RUNNING / START_TRANSITION == START_TRANSITION, edge: none
+[0.050] [info] Trigger /------------------------------------------------
+[0.050] [info] Group 0:
+[0.050] [info] SyncStart: true
+[0.050] [info] Trigger  ------------------------------------------------/
+[0.050] [info] SyncEvent standbyState -> startTransition -> runningState
+[0.050] [info] SyncAction initState -> startTransition -> runningState
+[5.200] [info] HazardPerceived: true, delay: 0.50, rel_dist: 24.58 < 25.00, edge: rising
+[5.250] [info] HazardPerceived: false, delay: 0.50, rel_dist: 23.89 < 25.00, edge: rising
+[5.700] [info] Synchronize masterTimeToDest (0.010) reached within this timestep (0.050)
+[5.700] [info] SyncAction runningState -> endTransition -> completeState
+[5.700] [info] SyncEvent complete after 1 execution
+[5.700] [info] SyncEvent runningState -> endTransition -> completeState
+[5.700] [info] NPCManeuver runningState -> endTransition -> completeState
+[5.700] [info] NPCGroup complete after 1 execution
+[5.700] [info] NPCGroup runningState -> endTransition -> completeState
+[5.700] [info] Trigger /------------------------------------------------
+[5.700] [info] Group 0:
+[5.700] [info] HazardPerceived: true
+[5.700] [info] Triggering entity 0: Ego
+[5.700] [info] Trigger  ------------------------------------------------/
+[5.700] [info] EgoBrakeEvent standbyState -> startTransition -> runningState
+[5.700] [info] EgoBrakeAction initState -> startTransition -> runningState
+[7.100] [info] EgoBrakeAction runningState -> endTransition -> completeState
+[7.100] [info] EgoBrakeEvent complete after 1 execution
+[7.100] [info] EgoBrakeEvent runningState -> endTransition -> completeState
+[7.100] [info] EgoReaction runningState -> endTransition -> completeState
+[7.100] [info] EgoReactionGroup complete after 1 execution
+[7.100] [info] EgoReactionGroup runningState -> endTransition -> completeState
+[7.100] [info] EgoStopped: true, delay: 1.50, speed: 0.00 < 0.05, edge: rising
+[7.150] [info] EgoStopped: false, delay: 1.50, speed: 0.00 < 0.05, edge: rising
+[8.600] [info] Trigger /------------------------------------------------
+[8.600] [info] Group 0:
+[8.600] [info] StopAfterImpact: false
+[8.600] [info] Group 1:
+[8.600] [info] EgoStopped: true
+[8.600] [info] Triggering entity 0: Ego
+[8.600] [info] Group 2:
+[8.600] [info] Timeout: false
+[8.600] [info] Trigger  ------------------------------------------------/
+[8.600] [info] ImpactEvent standbyState -> stopTransition -> completeState
+[8.600] [info] Impact runningState -> endTransition -> completeState
+[8.600] [info] ImpactGroup complete after 1 execution
+[8.600] [info] ImpactGroup runningState -> endTransition -> completeState
+[8.600] [info] LTAPAct runningState -> endTransition -> completeState
+[8.600] [info] LTAPStory runningState -> endTransition -> completeState
+[8.600] [info] storyBoard runningState -> stopTransition -> completeState
+[8.600] [info] Closing

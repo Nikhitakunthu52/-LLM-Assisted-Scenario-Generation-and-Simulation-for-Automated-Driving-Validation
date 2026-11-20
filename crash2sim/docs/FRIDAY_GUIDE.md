@@ -46,6 +46,16 @@ You should see 5 reports with `reproduces report: True/False` and new files in `
 Open one scenario in esmini's viewer (mouse to orbit; `k` changes the camera, Tab switches vehicles):
 `tools/esmini-demo/bin/esmini --window 60 60 1024 576 --path tools/esmini-demo/resources/models --osc scenarios/generated/ground_truth/CIREN_8392.xosc`
 
+## 2b. Play scenarios in esmini (no Python needed)
+
+- **Mac:** in Finder, open `crash2sim/play/` and double-click **Play Scenarios.command**. Pick 1–5.
+  (First time: if macOS blocks it, right-click → Open → Open.)
+- **Windows:** double-click `crash2sim\play\play.bat`.
+
+These play `scenarios/demo/`: the same crashes as the ground-truth scenarios, rendered in daylight so they're
+visible. The originals in `scenarios/generated/` keep the report's lighting (e.g. CIREN_8392 at night).
+Rebuild the daylight copies after editing ground truth: `python make_demo_scenarios.py`.
+
 ## 3. Replace the placeholder crash reports (Data team, Thu)
 
 The 4 files in `data/reports/` are **synthetic placeholders**. Replace them with 2 real cases of each type: 1 rear-end + 1 left turn across path per type.
