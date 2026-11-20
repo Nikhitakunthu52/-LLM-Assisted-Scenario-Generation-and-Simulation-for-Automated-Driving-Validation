@@ -17,3 +17,6 @@ outputs/**/esmini_log.txt
 data/raw/
 *.xlsx
 *.xls
+
+# esmini run logs
+log.txt
